@@ -31,15 +31,22 @@ body {
     margin-top: 1rem;
 }
 
+.form-signin input[type="password"]{
+    position: relative;
+    padding-right: 35px;
+}
+
 .show-password {
     position: absolute;
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
-    display: none;
+    color: #6c757d;
+    /*display: none;*/
 }
 
-.form-floating input[type="password"] .show-password:focus{
-    display: block;
+.form-signin input[type="password"]:focus ~ .show-password{
+     /*display: block;*/
+    color: #000000;
 }

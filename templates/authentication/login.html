@@ -16,8 +16,9 @@
             <label for="floatingInput">Email address</label>
         </div>
         <div class="form-floating">
-            <input type="password" class="form-control radius-bottom" id="floatingPassword" placeholder="Password">
+            <input type="password" class="form-control radius-bottom password-input" id="floatingPassword" placeholder="Password">
             <label for="floatingPassword">Password</label>
+                <i class="bi bi-eye-fill show-password"></i>
         </div>
 
         <div class="form-check text-start my-3">
@@ -29,14 +30,16 @@
         <button class="btn btn-primary w-100 py-2" type="submit">Login</button>
 
         <p class="text-center pt-3">
-            <a href="{% url 'forgot-password' %}" rel="noreferrer" class="text-secondary">Forgot password?</a>
+            <a href="{% url 'forgot-password' %}" rel="noreferrer" class="text-secondary small">Forgot password?</a>
         </p>
 
         <p class="text-center ">
-            <a href="{% url 'register' %}" rel="noreferrer" class="text-secondary">Don't have an account? Sign up</a>
+            <a href="{% url 'register' %}" rel="noreferrer" class="text-secondary small">Don't have an account? Sign
+                up</a>
         </p>
 
-        <p class="mt-5 mb-3 text-body-secondary">&copy; 2017–2024</p>
+        <p class="mt-5 mb-3 text-body-secondary text-center ">&copy; 2020–<span id="currentYear"></span>
+        </p>
     </form>
 
 {% endblock %}
