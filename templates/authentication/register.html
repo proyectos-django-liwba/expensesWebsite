@@ -30,12 +30,12 @@
 <div class="d-flex justify-content-center align-items-center h-100  py-4 ">
     <main class="form-signin w-100 m-auto">
         <form>
-            <div class="d-flex align-content-center radius-top">
+            <a class="d-flex align-content-center text-decoration-none" href="{% url 'expenses' %}" rel="noreferrer">
                 <img class="mb-4" src="{% static 'img/logo.png' %}" alt="" width="60" height="60">
                 <h1 class="fw-normal">penses</h1>
-            </div>
+            </a>
 
-            <h3 class="h3 mb-3 fw-normal">Please sign in</h3>
+            <h3 class="h3 mb-3 fw-normal">Please sign up</h3>
             <div class="form-floating">
                 <input type="text" class="form-control radius-top" id="floatingFirstName" placeholder="Jhon">
                 <label for="floatingFirstName">First Name</label>
@@ -55,13 +55,19 @@
                 <i class="bi bi-eye-fill show-password"></i>
             </div>
             <div class="form-floating">
-                <input type="password" class="form-control radius-bottom" id="floatingConfirmPassword" placeholder="********">
+                <input type="password" class="form-control radius-bottom" id="floatingConfirmPassword"
+                       placeholder="********">
                 <label for="floatingConfirmPassword">Confirm Password</label>
                 <i class="bi bi-eye-fill show-password"></i>
             </div>
 
             <button class="btn btn-primary w-100 py-2" type="submit">Register</button>
+            <p class="text-center pt-3">
+                <a href="{% url 'login' %}" rel="noreferrer" class="text-secondary">Already have an account? Sign In</a>
+            </p>
+
             <p class="mt-5 mb-3 text-body-secondary">&copy; 2017–2024</p>
+
         </form>
     </main>
 
