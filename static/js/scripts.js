@@ -18,7 +18,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
-
 $(document).ready(function () {
     $('.show-password').click(function () {
         const passwordField = $(this).siblings('.password-input');

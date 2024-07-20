@@ -15,6 +15,7 @@ body {
 
 .form-signin input {
     border-radius: 0;
+    margin-bottom: 1px;
 }
 
 .radius-top {
@@ -49,4 +50,12 @@ body {
 .form-signin input[type="password"]:focus ~ .show-password{
      /*display: block;*/
     color: #000000;
+}
+
+.form-signin .feedback{
+    color: red;
+    font-size: 9px;
+    position: absolute;
+    bottom: -15px;
+    padding-left: 10px;
 }
