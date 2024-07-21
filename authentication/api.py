@@ -2,6 +2,7 @@ import json
 from django.http import JsonResponse
 from django.views import View
 from .validations import authentication_validation
+from django.contrib.auth.models import User
 
 
 class LoginApi(View):

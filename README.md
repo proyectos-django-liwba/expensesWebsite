@@ -686,3 +686,43 @@ function handleValidationErrors(errors) {
     }, 2000);
 }
 ```
+
+### Libreria de Notificaciones
+
+["Documentación Toastify"](https://www.npmjs.com/package/toastify-js)
+
+1. CDN de la libreria
+```
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+```
+
+2. Uso solo mostrar mensaje
+```
+    Toastify({
+        text: "This is a success message!",
+        duration: 3000,
+        gravity: "top", // or bottom
+        position: "right", // or left
+        backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+    }).showToast();
+```
+3. Uso con funcion callback
+```
+    Toastify({
+      text: "This is a toast",
+      duration: 3000,
+      destination: "https://github.com/apvarun/toastify-js",
+      newWindow: true,
+      close: true,
+      gravity: "top", // `top` or `bottom`
+      position: "left", // `left`, `center` or `right`
+      stopOnFocus: true, // Prevents dismissing of toast on hover
+      style: {
+        background-color: "linear-gradient(to right, #00b09b, #96c93d)",
+      },
+      onClick: function(){} // Callback after click
+    }).showToast();
+```

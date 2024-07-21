@@ -73,7 +73,7 @@ function toastrSuccess(message) {
         duration: 3000,
         gravity: "top", // or bottom
         position: "right", // or left
-        backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+        backgroundColor:"linear-gradient(to right, #00b09b, #96c93d)",
         stopOnFocus: true, // Prevents dismissing of toast on hover
     }).showToast();
 }
