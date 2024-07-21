@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
+
     const formLogin = document.getElementById('form-login');
 
     formLogin.addEventListener('submit', function (event) {
@@ -29,6 +30,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     // Mostrar los errores en el formulario
                     handleValidationErrors(result.errors);
                 }
+
+                console.log(result.message)
+                if (result.message) {
+                    toastrSuccess(result.message);
+                }
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -58,4 +64,16 @@ function handleValidationErrors(errors) {
             feedback.innerHTML = '';
         });
     }, 2000);
+}
+
+//notificaciones con Toastify
+function toastrSuccess(message) {
+    Toastify({
+        text: message,
+        duration: 3000,
+        gravity: "top", // or bottom
+        position: "right", // or left
+        backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+    }).showToast();
 }

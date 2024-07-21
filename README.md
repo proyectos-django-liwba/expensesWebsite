@@ -526,3 +526,163 @@ con un componente. Se puede compartir mas de una variable `with nombre_prop1=var
     </div>
 ```
 ## Formularios 
+
+### Permisos en formulario
+- Similar a otros framework para usar un formulario requiere permisos csrf
+```
+    <form id="form-login" autocomplete="off">
+        {% csrf_token %}
+    </form>
+```
+- También en al utilizar herramientas como postman o insomnia, se deben agregar a la url
+```
+    from django.urls import path
+    from .views import LoginView
+    from .api import LoginApi
+    from django.views.decorators.csrf import csrf_exempt
+    
+    urlpatterns = [
+        path('login/', LoginView.as_view(), name='login'),
+        path('api/login/', csrf_exempt(LoginApi.as_view()), name='api-login'),
+    ]
+```
+
+### Enviar datos por formulario
+En el directorio de una app creamos un archivo api.py, en donde se recibirá los datos,
+se realizaran acciones como: consultas a bd, procedimientos logicos, respuestas a solicitudes
+
+1. Endpoint de API
+```
+import json
+from django.http import JsonResponse
+from rest_framework.views import View
+from .validation import authentication_validation
+
+
+class LoginApi(View):
+
+    def post(self, request):
+        # obtener datos del request y decodificar el json
+        data = json.loads(request.body)
+        # validaciones
+        errors = authentication_validation().validate_login(data)
+
+        if errors:
+            return JsonResponse({'errors': errors}, status=400)
+            
+        # consultas a bd
+        # procedimientos logicos
+        # respuesta
+        return JsonResponse({'message': 'Login successful', 'errors': errors}, status=200)
+
+```
+
+2. Creamos un archivo para las validaciones dentro del directorio de la app, validations.py
+```
+class authentication_validation():
+    # data contiene todos los datos del formulario
+    # se accede a ellos por el name que se les dio en el form
+    
+    def validate_login(self, data):
+        print(data)
+        errors = []
+        # validamos que existan las variables y que no esten vacias
+        if data["email"] is None or not data["email"]:
+            errors.append({'field': 'email', 'error': 'Email is required' })
+        if data["password"] is None or not data["password"]:
+            errors.append({'field': 'password', 'error': 'Password is required' })
+
+        return errors
+```
+3. Crear form
+```
+    <form id="form-login" autocomplete="off">
+        {% csrf_token %}
+
+        <div class="form-floating" id="email_container">
+            <input type="email" id="email" name="email" class="form-control radius-top" placeholder="name@example.com">
+            <label for="email">Email address</label>
+            <p class="feedback"></p>
+        </div>
+        <div class="form-floating" id="password_container">
+            <input type="password" id="password" name="password" class="form-control radius-bottom password-input "
+                   placeholder="Password">
+            <label for="password">Password</label>
+            <i class="bi bi-eye-fill show-password"></i>
+            <p class="feedback"></p>
+        </div>
+
+        <button class="btn btn-primary w-100 py-2" type="submit">Login</button>
+
+    </form>
+```
+4. Comunicar el form de la vista con el endpoint 
+```
+document.addEventListener('DOMContentLoaded', function () {
+    const formLogin = document.getElementById('form-login');
+
+    formLogin.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+
+        // Convierte FormData a un objeto
+        const data = {};
+        formData.forEach((value, key) => {
+            data[key] = value;
+        });
+
+        // Enviar la petición al endpoint de la API
+        fetch('http://localhost:8000/authentication/api/login/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .then(result => {
+                // verificar la respuesta y errores
+                console.log('Response:', result);
+                console.log(result.errors.length)
+                
+
+                if (result.errors.length > 0) {
+                    // Mostrar los errores en el formulario
+                    handleValidationErrors(result.errors);
+                ...
+                }
+                
+                // mostrar notificación de respuesta
+                ...
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+    });
+});
+
+//validación de formulario de login
+function handleValidationErrors(errors) {
+    errors.forEach(error => {
+        const fieldContainer = document.getElementById(`${error.field}_container`);
+        const input = fieldContainer.querySelector('input');
+        const feedback = fieldContainer.querySelector('.feedback');
+
+        input.classList.add('border-1', 'border-danger');
+        feedback.innerHTML = error.error;
+    });
+
+    setTimeout(() => {
+        errors.forEach(error => {
+            const fieldContainer = document.getElementById(`${error.field}_container`);
+            const input = fieldContainer.querySelector('input');
+            const feedback = fieldContainer.querySelector('.feedback');
+
+            input.classList.remove('border-1', 'border-danger');
+            feedback.innerHTML = '';
+        });
+    }, 2000);
+}
+```

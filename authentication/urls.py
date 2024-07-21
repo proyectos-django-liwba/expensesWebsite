@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import RegisterView, LoginView, ResetPasswordView, ForgotPasswordView
-from .router import LoginApi
+from .api import LoginApi
 from django.views.decorators.csrf import csrf_exempt
 
 
