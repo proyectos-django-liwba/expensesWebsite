@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Proyecto de practica Django">
     <meta name="author" content="liwBh">
+    <meta name="keywords" content="Django, Expenses, Web Development, Project, Python">
 
-    <title>Expenses WebSite - {% block title %}
-    {% endblock %}</title>
+    <title>Expenses WebSite - {{ title }}</title>
 
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static '/css/estilos.css' %}">
@@ -30,9 +30,9 @@
 
 <div class="d-flex justify-content-center align-items-center h-100  py-4 ">
     <main class="form-signin w-100 m-auto">
-       {% block content %}
-       	
-       {% endblock %}
+        {% block content %}
+
+        {% endblock %}
     </main>
 
 </div>
