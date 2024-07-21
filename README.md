@@ -397,7 +397,7 @@ De esta forma en todas las vistas tengo acceso a la variable `current_year`
 En con el fin de reduccir codigo y sacarle el maximo provecho a archivos de template base
 inyectaremos codigo a nuestras vistas. 
 
-- Página o Vista
+1. Página o Vista
 ```
     {% extends 'base.html' %}
     
@@ -405,7 +405,7 @@ inyectaremos codigo a nuestras vistas.
         <h3 class="my-3">Add expenses</h3>
     {% endblock %}
 ```
-- Template base
+2. Template base
 ```
     {% load static %}
     <html lang="en" data-bs-theme="auto">
@@ -464,3 +464,65 @@ inyectaremos codigo a nuestras vistas.
 
 Con `extends` reutilizamos nuestra vista base ademas, le inyectamos de forma dinamica con `block`
 el contenido propio de nuestra vista.
+
+### Uso de url en enlaces
+```
+<a href="{% url 'register' %}" >Registrarse</a>
+```
+
+De forma mas practica en lugar colar un url completa `http://localhost:8000/authentication/register/`
+que luego en producción debemos cambiar es mas practico utilizar `url` y 'nombre_vista'.
+
+El nombre de la vista debe ser unico y se lo asignamos cuando creamos una url en el archivo urls.py
+```
+from django.urls import path
+from .views import RegisterView, LoginView, ResetPasswordView, ForgotPasswordView
+
+urlpatterns = [
+   path('register/', RegisterView.as_view(), name='register'),
+    path('login/', LoginView.as_view(), name='login'),
+    path('reset-password/', ResetPasswordView.as_view(), name='reset-password'),
+    path('forgot-password/', ForgotPasswordView.as_view(), name='forgot-password'),
+]
+
+```
+### Compartir datos o props con un componente
+
+1. Obtener una lista de objetos en el archivo views.py de la app
+```
+from django.shortcuts import render
+from .models import Expense
+
+def expenses_list(request):
+    expenses = Expense.objects.all()
+    return render(request, 'expenses/index.html', {'expenses': expenses})
+
+```
+Obtenemos la lista de gastos almacenada en base de datos, luego la compartimos con la vista
+
+2. En nuestra vista principal iteramos la lista de objetos
+
+```
+    {% extends 'base.html' %}
+    
+    {% block content %}
+        <h1>Expenses List</h1>
+        <div class="expenses-container">
+            {% for expense in expenses %}
+                 {% include 'expenses/components/card.html' with expense=expense %}
+            {% endfor %}
+        </div>
+    {% endblock %}
+```
+En el segmento de codigo iteramos la lista, y vamos a compartir el diccionario o datos
+con un componente. Se puede compartir mas de una variable `with nombre_prop1=variable1 nombre_prop2=variable2 ...`
+
+3. Consumir datos de las props en el componente
+```
+    <!-- card component -->
+    <div class="card">
+        <h2>{{ expense.name }}</h2>
+        <p>Price: ${{ expense.price }}</p>
+    </div>
+```
+## Formularios 
