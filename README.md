@@ -58,6 +58,10 @@
 ```   
     pip install django
 ```  
+##### Instalar Email validation ✅
+```   
+    pip install email_validation
+```
 ##### Instalar django rest framework ✅
 ```   
     pip install djangorestframework
